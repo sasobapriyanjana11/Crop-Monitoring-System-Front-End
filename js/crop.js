@@ -1,7 +1,7 @@
 let selectedRow = null;
 
 // Base API URL (adjust based on your backend configuration)
-const API_URL = "http://localhost:8080/api/crops"; 
+const API_URL = "http://localhost:8080/api/v1/crops";
 
 // Save Crop function
 async function saveCrop() {
@@ -39,7 +39,7 @@ async function updateCrop() {
         const cropId = $(selectedRow).find("td:eq(1)").text(); // Assuming cropCode is used as ID
         try {
             const response = await fetch(`${API_URL}/${cropId}`, {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
