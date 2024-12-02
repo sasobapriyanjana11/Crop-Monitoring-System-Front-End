@@ -7,7 +7,7 @@ function saveEquipment() {
     if (equipmentData && selectedRow === null) {
        
         $.ajax({
-            url: "http://localhost:8080/api/v1/equipments",
+            url: "http://localhost:8080/cropMonitor/api/v1/equipments",
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(equipmentData),
@@ -29,7 +29,7 @@ function updateEquipment() {
     if (equipmentData && selectedRow !== null) {
         
         $.ajax({
-            url: `http://localhost:8080/api/v1/equipments/${selectedEquipmentId}`, 
+            url: `http://localhost:8080/cropMonitor/api/v1/equipments/${selectedEquipmentId}`, 
             method: "PATCH",
             contentType: "application/json",
             data: JSON.stringify(equipmentData),
@@ -49,7 +49,7 @@ function updateEquipment() {
 // Fetch all equipment data (Read)
 function getAllEquipment() {
     $.ajax({
-        url: "http://localhost:8080/api/v1/equipments/all_equipments",  
+        url: "http://localhost:8080/cropMonitor/api/v1/equipments/all_equipments",  
         method: "GET",
         success: function (response) {
             const tbody = $('table tbody');
@@ -87,7 +87,7 @@ function editEquipment(id) {
     selectedEquipmentId = id;
 
     $.ajax({
-        url: `http://localhost:8080/api/v1/equipments/${id}`, 
+        url: `http://localhost:8080/cropMonitor/api/v1/equipments/${id}`, 
         method: "GET",
         success: function (equipment) {
             $('#equipmentCode').val(equipment.equipmentCode);
@@ -109,7 +109,7 @@ function editEquipment(id) {
 function deleteEquipment(id) {
     if (confirm("Are you sure you want to delete this equipment?")) {
         $.ajax({
-            url: `http://localhost:8080/api/v1/equipments/${id}`, 
+            url: `http://localhost:8080/cropMonitor/api/v1/equipments/${id}`, 
             method: "DELETE",
             success: function () {
                 alert("Equipment deleted successfully!");

@@ -5,7 +5,7 @@ function saveVehicle() {
     const vehicleData = getFormData();
     if (vehicleData && selectedRow === null) {
         $.ajax({
-            url: `http://localhost:8080/api/v1/vehicles`,
+            url: `http://localhost:8080/cropMonitor/api/v1/vehicles`,
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(vehicleData),
@@ -30,7 +30,7 @@ function updateVehicle() {
     if (vehicleData && selectedRow !== null) {
         const vehicleCode = $(selectedRow).find("td:eq(1)").text();
         $.ajax({
-            url: `http://localhost:8080/api/v1/vehicles/${vehicleCode}`,
+            url: `http://localhost:8080/cropMonitor/api/v1/vehicles/${vehicleCode}`,
             type: 'PATCH',
             contentType: 'application/json',
             data: JSON.stringify(vehicleData),
@@ -54,7 +54,7 @@ function deleteVehicle() {
     if (selectedRow !== null) {
         const vehicleCode = $(selectedRow).find("td:eq(1)").text();
         $.ajax({
-            url: `http://localhost:8080/api/v1/vehicles/${vehicleCode}`,
+            url: `http://localhost:8080/cropMonitor/api/v1/vehicles/${vehicleCode}`,
             type: 'DELETE',
             success: function (response) {
                 alert("Vehicle deleted successfully!");
@@ -74,7 +74,7 @@ function deleteVehicle() {
 // Get All Vehicles
 function getAllVehicles() {
     $.ajax({
-        url: `http://localhost:8080/api/v1/vehicles/all_vehicles`,
+        url: `http://localhost:8080/cropMonitor/api/v1/vehicles/all_vehicles`,
         type: 'GET',
         success: function (response) {
             $('table tbody').empty();

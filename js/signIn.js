@@ -15,7 +15,7 @@ function userLogin() {
   }
 
   $.ajax({
-      url: "http://localhost:8080/api/v1/auth/authenticate",
+      url: "http://localhost:8080/cropMonitor/api/v1/auth/signin",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({

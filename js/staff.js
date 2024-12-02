@@ -7,7 +7,7 @@ function saveStaff() {
     if (staffData && selectedRow === null) {
         // POST request to create a new staff member
         $.ajax({
-            url: `http://localhost:8080/api/staff`,
+            url: `http://localhost:8080/cropMonitor/api/v1/staff`,
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(staffData),
@@ -47,7 +47,7 @@ function updateStaff() {
         const staffId = $(selectedRow).find("td:eq(1)").text(); // Staff ID from the selected row
         // PUT request to update the staff member
         $.ajax({
-            url: `http://localhost:8080/api/staff/${staffId}`,
+            url: `http://localhost:8080/cropMonitor/api/v1/staff/${staffId}`,
             method: "PATCH",
             contentType: "application/json",
             data: JSON.stringify(staffData),
@@ -67,7 +67,7 @@ function updateStaff() {
 // Get All Staff function
 function getAllStaff() {
     $.ajax({
-        url: API_URL,
+        url:`http://localhost:8080/cropMonitor/api/v1/staff/all_staff`,
         method: "GET",
         success: function (data) {
             const staffTableBody = $('table tbody');
@@ -107,7 +107,7 @@ function removeStaff(td, staffId) {
     if (confirm("Are you sure you want to delete this staff member?")) {
         // DELETE request to delete the staff member
         $.ajax({
-            url: `http://localhost:8080/api/staff/${staffId}`,
+            url: `http://localhost:8080/cropMonitor/api/v1/staff/${staffId}`,
             method: "DELETE",
             success: function () {
                 alert("Staff deleted successfully.");

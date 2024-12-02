@@ -1,102 +1,98 @@
 document.addEventListener("DOMContentLoaded", () => {
-    getAllFields();
+    getAllLogs();
 });
 
-// Save new field
-function saveField() {
-    const fieldData = getFieldData();
+// Save new monitoring log
+function saveLog() {
+    const logData = getLogData();
 
-    if (fieldData && selectedRow === null) {
+    if (logData && selectedRow === null) {
         const formData = new FormData();
 
         // Append regular form data
-        formData.append('fieldCode', fieldData.fieldCode);
-        formData.append('name', fieldData.name);
-        formData.append('extentSize', fieldData.extentSize);
-        formData.append('location', fieldData.location);
-        formData.append('equipmentCode', fieldData.equipmentCode);
+        formData.append('logCode', logData.logCode);
+        formData.append('logDate', logData.logDate);
+        formData.append('observationDetails', logData.observationDetails);
+        formData.append('fieldCode', logData.fieldCode);
 
-        // Append image files if available
+        // Append image file if available
         appendImageFiles(formData);
 
         $.ajax({
-            url: "http://localhost:8080/api/v1/fields",  
+            url: "http://localhost:8080/cropMonitor/api/v1/monitoring_logs",  
             method: "POST",
             data: formData,
             processData: false,  // Prevent jQuery from processing the data
             contentType: false,  // Let the browser set the content type for file uploads
             success: function () {
-                alert("Field added successfully.");
+                alert("Log added successfully.");
                 resetForm();
-                getAllFields();
+                getAllLogs();
             },
             error: function () {
-                alert("Error adding field.");
+                alert("Error adding log.");
             }
         });
     }
 }
 
-// Update existing field
-function updateField() {
-    const fieldData = getFieldData();
+// Update existing monitoring log
+function updateLog() {
+    const logData = getLogData();
 
-    if (fieldData && selectedRow !== null) {
+    if (logData && selectedRow !== null) {
         const formData = new FormData();
-        const fieldCode = $(selectedRow).find("td:eq(1)").text();  // Get field code for the update
+        const logCode = $(selectedRow).find("td:eq(1)").text();  // Get log code for the update
 
         // Append regular form data
-        formData.append('fieldCode', fieldData.fieldCode);
-        formData.append('name', fieldData.name);
-        formData.append('extentSize', fieldData.extentSize);
-        formData.append('location', fieldData.location);
-        formData.append('equipmentCode', fieldData.equipmentCode);
+        formData.append('logCode', logData.logCode);
+        formData.append('logDate', logData.logDate);
+        formData.append('observationDetails', logData.observationDetails);
+        formData.append('fieldCode', logData.fieldCode);
 
-        // Append image files if available
+        // Append image file if available
         appendImageFiles(formData);
 
         $.ajax({
-            url: `http://localhost:8080/api/v1/fields/${fieldCode}`,  
+            url: `http://localhost:8080/cropMonitor/api/v1/monitoring_logs/${logCode}`,  
             method: "PATCH",
             data: formData,
             processData: false,  // Prevent jQuery from processing the data
             contentType: false,  // Let the browser set the content type for file uploads
             success: function () {
-                alert("Field updated successfully.");
+                alert("Log updated successfully.");
                 resetForm();
-                getAllFields();
-                $('#addFieldModal').modal('hide');
+                getAllLogs();
+                $('#addLogModal').modal('hide');
             },
             error: function () {
-                alert("Error updating field.");
+                alert("Error updating log.");
             }
         });
     }
 }
 
-// Fetch all fields data
-function getAllFields() {
+// Fetch all monitoring logs
+function getAllLogs() {
     $.ajax({
-        url: "http://localhost:8080/api/v1/fields", 
+        url: "http://localhost:8080/cropMonitor/api/v1/monitoring_logs/all_logs", 
         method: "GET",
         success: function (response) {
             const tbody = $('table tbody');
             tbody.empty();
 
-            response.forEach(field => {
+            response.forEach(log => {
                 const row = `
-                    <tr data-id="${field.fieldCode}">
+                    <tr data-id="${log.logCode}">
                         <td><input type="checkbox"></td>
-                        <td>${field.fieldCode}</td>
-                        <td>${field.name}</td>
-                        <td>${field.extentSize}</td>
-                        <td>${field.location}</td>
-                        <td>${field.image1 ? `<img src="${field.image1}" alt="Image 1" width="50" height="50">` : 'N/A'}</td>
-                        <td>${field.image2 ? `<img src="${field.image2}" alt="Image 2" width="50" height="50">` : 'N/A'}</td>
-                        <td>${field.equipmentCode}</td>
+                        <td>${log.logCode}</td>
+                        <td>${log.logDate}</td>
+                        <td>${log.observationDetails}</td>
+                        <td>${log.observedImage ? `<img src="${log.observedImage}" alt="Observed Image" width="50" height="50">` : 'N/A'}</td>
+                        <td>${log.fieldCode}</td>
                         <td>
-                            <button class="btn btn-warning btn-sm" onclick="editField(${field.fieldCode})">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteField(${field.fieldCode})">Delete</button>
+                            <button class="btn btn-warning btn-sm" onclick="editLog(${log.logCode})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteLog(${log.logCode})">Delete</button>
                         </td>
                     </tr>
                 `;
@@ -105,84 +101,74 @@ function getAllFields() {
         },
         error: function (error) {
             console.error("Error:", error);
-            alert("Failed to fetch fields data.");
+            alert("Failed to fetch logs data.");
         }
     });
 }
 
-// Edit Field (populate form with data for editing)
-function editField(fieldCode) {
+// Edit Log (populate form with data for editing)
+function editLog(logCode) {
     $.ajax({
-        url: `http://localhost:8080/api/v1/fields/${fieldCode}`,  
+        url: `http://localhost:8080/cropMonitor/api/v1/monitoring_logs/${logCode}`,  
         method: "GET",
-        success: function (field) {
-            $('#fieldCode').val(field.fieldCode);
-            $('#fieldName').val(field.name);
-            $('#extentSize').val(field.extentSize);
-            $('#fieldLocation').val(field.location);
-            $('#equipmentCode').val(field.equipmentCode);
+        success: function (log) {
+            $('#logCode').val(log.logCode);
+            $('#logDate').val(log.logDate);
+            $('#observationDetails').val(log.observationDetails);
+            $('#fieldCode').val(log.fieldCode);
 
-            // Display image previews if available
-            $('#img1').val('');
-            $('#img2').val('');
+            // Show image preview if available
+            displayImagePreview(log.observedImage, '#observedImagePreview');
 
-            // Show images if available
-            displayImagePreview(field.image1, '#img1Preview');
-            displayImagePreview(field.image2, '#img2Preview');
-
-            $('#addFieldModal').modal('show');
+            $('#addLogModal').modal('show');
         },
         error: function (error) {
             console.error("Error:", error);
-            alert("Failed to fetch field details.");
+            alert("Failed to fetch log details.");
         }
     });
 }
 
-// Delete Field
-function deleteField(fieldCode) {
-    if (confirm("Are you sure you want to delete this field?")) {
+// Delete Log
+function deleteLog(logCode) {
+    if (confirm("Are you sure you want to delete this log?")) {
         $.ajax({
-            url: `http://localhost:8080/api/v1/fields/${fieldCode}`,  
+            url: `http://localhost:8080/cropMonitor/api/v1/monitoring_logs/${logCode}`,  
             method: "DELETE",
             success: function () {
-                alert("Field deleted successfully!");
-                getAllFields();
+                alert("Log deleted successfully!");
+                getAllLogs();
             },
             error: function (error) {
                 console.error("Error:", error);
-                alert("Failed to delete field.");
+                alert("Failed to delete log.");
             }
         });
     }
 }
 
 // Get data from the form
-function getFieldData() {
+function getLogData() {
     return {
-        fieldCode: $('#fieldCode').val(),
-        name: $('#fieldName').val(),
-        extentSize: $('#extentSize').val(),
-        location: $('#fieldLocation').val(),
-        equipmentCode: $('#equipmentCode').val()
+        logCode: $('#logCode').val(),
+        logDate: $('#logDate').val(),
+        observationDetails: $('#observationDetails').val(),
+        fieldCode: $('#fieldCode').val()
     };
 }
 
 // Reset form
 function resetForm() {
-    $('#fieldForm')[0].reset();
+    $('#logForm')[0].reset();
     selectedRow = null;
-    $('#img1Preview').html('');
-    $('#img2Preview').html('');
+    $('#observedImagePreview').html('');
 }
 
-// Append image files to form data
+// Append image file to form data
 function appendImageFiles(formData) {
-    const img1 = $('#img1')[0].files[0];
-    const img2 = $('#img2')[0].files[0];
+    const observedImage = $('#observedImage')[0].files[0];
 
-    if (img1) formData.append('image1', img1);
-    if (img2) formData.append('image2', img2);
+    if (observedImage) formData.append('observedImage', observedImage);
 }
 
 // Display image preview
@@ -191,8 +177,3 @@ function displayImagePreview(imageUrl, previewElementId) {
         $(previewElementId).html(`<img src="${imageUrl}" alt="Image" width="100" height="100">`);
     }
 }
-
-// Initialize the application
-$(document).ready(function () {
-    getAllFields();
-});

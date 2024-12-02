@@ -24,7 +24,7 @@ function saveField() {
         if (img2) formData.append('image2', img2);
 
         $.ajax({
-            url: "http://localhost:8080/api/v1/fields",  
+            url: "http://localhost:8080/cropMonitor/api/v1/fields",  
             method: "POST",
             data: formData,
             processData: false,  // Prevent jQuery from processing the data
@@ -64,7 +64,7 @@ function updateField() {
         if (img2) formData.append('image2', img2);
 
         $.ajax({
-            url: `http://localhost:8080/api/v1/fields/${fieldCode}`,  
+            url: `http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}`,  
             method: "PATCH",
             data: formData,
             processData: false,  // Prevent jQuery from processing the data
@@ -85,7 +85,7 @@ function updateField() {
 // Fetch all fields data
 function getAllFields() {
     $.ajax({
-        url: "http://localhost:8080/api/v1/fields", 
+        url: "http://localhost:8080/cropMonitor/api/v1/fields", 
         method: "GET",
         success: function (response) {
             const tbody = $('table tbody');
@@ -121,7 +121,7 @@ function getAllFields() {
 // Edit Field (populate form with data for editing)
 function editField(fieldCode) {
     $.ajax({
-        url: `http://localhost:8080/api/v1/fields/${fieldCode}`,  
+        url: `http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}`,  
         method: "GET",
         success: function (field) {
             $('#fieldCode').val(field.fieldCode);
@@ -155,7 +155,7 @@ function editField(fieldCode) {
 function deleteField(fieldCode) {
     if (confirm("Are you sure you want to delete this field?")) {
         $.ajax({
-            url: `http://localhost:8080/api/v1/fields/${fieldCode}`,  
+            url: `http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}`,  
             method: "DELETE",
             success: function () {
                 alert("Field deleted successfully!");
