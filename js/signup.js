@@ -8,55 +8,43 @@ $(document).ready(function() {
 
 // Function to handle user registration
 function userRegistration() {
-    // Get form input values
-    // const fullName = document.getElementById('fullName').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    const role = document.getElementById('role').value; // Get role value
-     //!fullName ||
-    // Validate form fields
-    if ( !email || !password || !confirmPassword || !role) {
-        alert('Please fill in all fields.');
-        return;
-    }
+    const email = $('#email').val().trim();
+    const password = $('#password').val().trim();
+    const role = $('#role').val().trim(); // Get role value
 
-    if (password !== confirmPassword) {
-        alert('Passwords do not match.');
+    // Validate inputs
+    if (!email || !password || !role) {
+        alert('Please fill in all fields.');
         return;
     }
 
     // AJAX request to register the user
     $.ajax({
-        url: "http://localhost:8080/cropMonitor/api/v1/auth/signup",  
+        url: "http://localhost:8080/cropMonitor/api/v1/auth/signup",
         method: "POST",
-        contentType: "application/json",  
+        contentType: "application/json",
         data: JSON.stringify({
-            // 'fullName': fullName,
-            'email': email,
-            'password': password,
-            'role': role  
+            email: email,
+            password: password,
+            role: role
         }),
         success: function(response) {
-            // On successful registration
             alert('Signup successful!');
             console.log(response);
 
-            // Save JWT token in localStorage for future requests
-            localStorage.setItem("token", response.data.token);
+            // Save JWT token in localStorage
+            // localStorage.setItem("token", response.token);
+            localStorage.setItem('jwtToken', response.token);
 
-            
-            $("#message").text("Registration successful!").removeClass("text-danger").addClass("text-success");
+            $("#message").text("Registration successful!")
+                .removeClass("text-danger").addClass("text-success");
 
-            
             $('#signupForm')[0].reset();
         },
         error: function(error) {
-            // On error (registration failed)
             console.log(error);
-
-            
-            $("#message").text("Registration failed!").removeClass("text-success").addClass("text-danger");
+            $("#message").text("Registration failed!")
+                .removeClass("text-success").addClass("text-danger");
         }
     });
 }
