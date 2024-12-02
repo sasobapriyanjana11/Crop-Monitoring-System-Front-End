@@ -1,5 +1,18 @@
 let selectedRow = null;
 
+// Save JWT token to localStorage after successful login
+function storeJwtToken(token) {
+    localStorage.setItem('jwtToken', token);
+    console.log("JWT token saved:", token);
+}
+
+// Retrieve JWT token from localStorage
+function getJwtToken() {
+    const token = localStorage.getItem('jwtToken');
+    console.log("JWT token retrieved:", token);
+    return token;
+}
+
 // Save Vehicle
 function saveVehicle() {
     const vehicleData = getFormData();
@@ -9,6 +22,10 @@ function saveVehicle() {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(vehicleData),
+            headers: {
+                'Authorization': `Bearer ${getJwtToken()}`,
+                'Content-Type': 'application/json'
+            },
             success: function (response) {
                 alert("Vehicle saved successfully!");
                 addTableRow(vehicleData);
@@ -34,6 +51,10 @@ function updateVehicle() {
             type: 'PATCH',
             contentType: 'application/json',
             data: JSON.stringify(vehicleData),
+            headers: {
+                'Authorization': `Bearer ${getJwtToken()}`,
+                'Content-Type': 'application/json'
+            },
             success: function (response) {
                 alert("Vehicle updated successfully!");
                 updateTableRow(selectedRow, vehicleData);
@@ -56,6 +77,10 @@ function deleteVehicle() {
         $.ajax({
             url: `http://localhost:8080/cropMonitor/api/v1/vehicles/${vehicleCode}`,
             type: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${getJwtToken()}`,
+                'Content-Type': 'application/json'
+            },
             success: function (response) {
                 alert("Vehicle deleted successfully!");
                 $(selectedRow).remove();
@@ -76,6 +101,10 @@ function getAllVehicles() {
     $.ajax({
         url: `http://localhost:8080/cropMonitor/api/v1/vehicles/all_vehicles`,
         type: 'GET',
+        headers: {
+            'Authorization': `Bearer ${getJwtToken()}`,
+            'Content-Type': 'application/json'
+        },
         success: function (response) {
             $('table tbody').empty();
             response.forEach(vehicle => {
