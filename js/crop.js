@@ -1,7 +1,7 @@
 let selectedRow = null;
 
 // Base API URL (adjust based on your backend configuration)
-const API_URL = "http://localhost:8080/api/v1/crops";
+const API_URL = "http://localhost:8080/cropMonitor/api/v1/crops";
 
 // Save Crop function
 async function saveCrop() {
