@@ -1,13 +1,13 @@
-// Save JWT token to localStorage after successful login
+// Store JWT token in localStorage
 function storeJwtToken(token) {
-    localStorage.setItem('jwtToken', token);  
-    console.log("JWT token saved:", token);  
+    localStorage.setItem('jwtToken', token);
+    console.log("JWT token saved:", token);
 }
 
 // Retrieve JWT token from localStorage
 function getJwtToken() {
     const token = localStorage.getItem('jwtToken');
-    console.log("JWT token retrieved:", token);  
+    console.log("JWT token retrieved:", token);
     return token;
 }
 
@@ -15,21 +15,20 @@ function getJwtToken() {
 function decodeJwt(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-
     return JSON.parse(jsonPayload);
 }
 
 // Check if JWT token exists and is valid (not expired)
 function checkJwtToken() {
     const token = getJwtToken();
-    console.log("Checking JWT token...");  
+    console.log("Checking JWT token...");
 
     if (!token) {
         alert("JWT token missing or invalid. Please log in.");
-        window.location.href = "/pages/index.html";  // Redirect to login page
+        window.location.href = "/pages/index.html";
         return null;
     }
 
@@ -38,18 +37,43 @@ function checkJwtToken() {
 
     if (decoded.exp < currentTime) {
         alert("JWT token expired. Please log in again.");
-        localStorage.removeItem('jwtToken');  // Remove expired token
-        window.location.href = "/pages/index.html";  
+        localStorage.removeItem('jwtToken'); 
+        window.location.href = "/pages/index.html";
         return null;
     }
 
     return token;
 }
 
+// Get form data for equipment
+function getFormData() {
+    const equipmentCode = $('#equipmentCode').val();
+    const equipmentName = $('#equipmentName').val();
+    const status = $('#status').val();
+    const type = $('#equipmentType').val();
+
+    if (!equipmentCode || !equipmentName || !status || !type) {
+        alert("Please fill in all required fields.");
+        return null;
+    }
+
+    return {
+        equipmentCode: equipmentCode,
+        equipmentName: equipmentName,
+        status: status,
+        type: type
+    };
+}
+
+// Reset form fields
+function resetForm() {
+    $('#equipmentForm')[0].reset();
+}
+
 // Save new equipment
 function saveEquipment() {
     const equipmentData = getFormData();
-    const token = checkJwtToken();  // Ensure token is valid
+    const token = checkJwtToken();
 
     if (equipmentData && token) {
         $.ajax({
@@ -57,8 +81,7 @@ function saveEquipment() {
             method: "POST",
             contentType: "application/json",
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${token}`
             },
             data: JSON.stringify(equipmentData),
             success: function () {
@@ -77,18 +100,16 @@ function saveEquipment() {
 // Update existing equipment
 function updateEquipment() {
     const equipmentData = getFormData();
-    const token = checkJwtToken();  // Ensure token is valid
+    const equipmentCode = $('#equipmentCode').val(); // Assume this is populated somewhere
+    const token = checkJwtToken();
 
-    const equipmentId = $('#equipmentId').val(); 
-    
-    if (equipmentData && equipmentId && token) {
+    if (equipmentData && equipmentCode && token) {
         $.ajax({
-            url: `http://localhost:8080/cropMonitor/api/v1/equipments/${equipmentId}`,
+            url: `http://localhost:8080/cropMonitor/api/v1/equipments/${equipmentCode}`,
             method: "PATCH",
             contentType: "application/json",
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${token}`
             },
             data: JSON.stringify(equipmentData),
             success: function () {
@@ -106,16 +127,15 @@ function updateEquipment() {
 
 // Delete equipment
 function deleteEquipment() {
-    const equipmentId = $('#equipmentId').val(); 
-    const token = checkJwtToken();  
+    const equipmentCode = $('#equipmentCode').val();
+    const token = checkJwtToken();
 
-    if (equipmentId && token) {
+    if (equipmentCode && token) {
         $.ajax({
-            url: `http://localhost:8080/cropMonitor/api/v1/equipments/${equipmentId}`,
+            url: `http://localhost:8080/cropMonitor/api/v1/equipments/${equipmentCode}`,
             method: "DELETE",
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${token}`
             },
             success: function () {
                 alert("Equipment deleted successfully.");
@@ -132,15 +152,14 @@ function deleteEquipment() {
 
 // Fetch all equipment
 function getAllEquipment() {
-    const token = checkJwtToken();  
+    const token = checkJwtToken();
 
     if (token) {
         $.ajax({
             url: "http://localhost:8080/cropMonitor/api/v1/equipments/all_equipments",
             method: "GET",
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${token}`
             },
             success: function (data) {
                 let tableBody = '';
@@ -156,59 +175,40 @@ function getAllEquipment() {
                 $('.tBody').html(tableBody);
             },
             error: function () {
-                alert("Error fetching equipment data.");
+                alert("Error fetching equipment.");
             }
         });
     }
 }
 
-// Get form data
-function getFormData() {
-    return {
-        equipmentCode: $('#equipmentCode').val(),
-        equipmentName: $('#equipmentName').val(),
-        status: $('#status').val(),
-        type: $('#type').val()
-    };
-}
-
-// Reset form after save/update
-function resetForm() {
-    $('#equipmentCode').val('');
-    $('#equipmentName').val('');
-    $('#status').val('');
-    $('#type').val('');
-}
-
-// Search equipment
+// Search equipment by name
 function search() {
-    const searchQuery = $('#searchInput').val();
-    const token = checkJwtToken();  
+    const query = $('#searchInput').val().toLowerCase();
 
-    if (searchQuery && token) {
-        $.ajax({
-            url: `http://localhost:8080/cropMonitor/api/v1/equipments/search?query=${searchQuery}`,
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            success: function (data) {
-                let tableBody = '';
-                data.forEach(equipment => {
-                    tableBody += `<tr>
-                        <td><input type="checkbox" class="equipment-checkbox" data-id="${equipment.id}"></td>
-                        <td>${equipment.equipmentCode}</td>
-                        <td>${equipment.equipmentName}</td>
-                        <td>${equipment.status}</td>
-                        <td>${equipment.type}</td>
-                    </tr>`;
-                });
-                $('.tBody').html(tableBody);
-            },
-            error: function () {
-                alert("Error searching equipment.");
-            }
-        });
-    }
+    $('.tBody tr').each(function () {
+        const equipmentName = $(this).find('td:nth-child(3)').text().toLowerCase();
+        if (equipmentName.includes(query)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
 }
+
+// Event listener for selecting equipment checkboxes
+$(document).on('change', '.equipment-checkbox', function () {
+    const equipmentId = $(this).data('id');
+    const isChecked = $(this).is(':checked');
+
+    if (isChecked) {
+        $('#equipmentCode').val(equipmentId);
+       
+    } else {
+        $('#equipmentCode').val('');
+    }
+});
+
+// Initialize the equipment table on page load
+$(document).ready(function () {
+    getAllEquipment();
+});

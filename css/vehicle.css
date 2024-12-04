@@ -1,0 +1,44 @@
+
+ .form-group select {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+ }
+
+.form-group input {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+}
+
+.form-row {
+            margin-bottom: 20px;
+}
+
+.modal-body {
+            padding: 20px;
+ }
+
+ .modal-footer {
+            padding: 20px;
+}
+
+.form-row .form-group {
+            padding: 10px;
+}
+
+.modal-content {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary, .btn-info, .btn-warning, .btn-danger {
+            margin-right: 10px;
+}
+
+.form-control, .form-select {
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    

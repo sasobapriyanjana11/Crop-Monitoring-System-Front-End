@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/main.css">
     <style>
         body{
-            background-image: url('/assets/Images/paddy.jpg');
+            background-image: url('/assets/Images/paddy2.jpg');
         }
         
     </style>
@@ -26,9 +26,6 @@
                 <p>Manager</p>
             </div>
             <ul class="nav flex-column mt-4">
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="/pages/">Dashboard</a>
-                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="/pages/field.html">Field Data</a>
                 </li>
@@ -54,7 +51,6 @@
         <div class="col-md-9 col-lg-10 main-content">
             <h1 class="my-4 text-center">Crop Management</h1>
 
-            <!-- Search Bar and Add Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <input type="text" class="form-control w-50" placeholder="Search Crop">
                 <button class="btn btn-success" data-toggle="modal" data-target="#addCropModal">Add Crop</button>
@@ -70,7 +66,7 @@
                     <th>Scientific Name</th>
                     <th>Category</th>
                     <th>Season</th>
-                    <th>Field Details</th>
+                    <th>Field Code</th>
                     <th>Image</th>
                     <th>Actions</th>
                 </tr>
@@ -110,23 +106,38 @@
                             <input type="text" class="form-control" id="scientificName" placeholder="Enter Scientific Name">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="category">Category</label>
-                            <input type="text" class="form-control" id="category" placeholder="Enter Category">
+                          <label for="category">Category</label>
+                            <select class="form-select" id="category" required>
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Cowpea">Cowpea</option>
+                                <option value="Green gram">Green gram</option>
+                                <option value="Chickpea">Chickpea</option>
+                                <option value="Sweet potato">Sweet potato</option>
+                                <option value="Reddish">Reddish</option>
+                                <option value="Cassava">Cassava</option>
+                              </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="season">Season</label>
-                            <input type="text" class="form-control" id="season" placeholder="Enter Season">
+                            <input type="text" class="form-control" id="cropSeason" placeholder="Enter Season">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="fieldDetails">Field Details</label>
-                            <input type="text" class="form-control" id="fieldDetails" placeholder="Enter Field Details">
+                            <label for="fieldCode">Field Code</label>
+                            <input type="text" class="form-control" id="fieldCode" placeholder="Enter Field Code">
+                        </div>
+                        <div>
+                            <label>Log Codes:</label><br>
+                            <input type="checkbox" name="logCode" value="logCode1"> Log Code 1<br>
+                            <input type="checkbox" name="logCode" value="logCode2"> Log Code 2<br>
+                            <input type="checkbox" name="logCode" value="logCode3"> Log Code 3<br>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="cropImage">Image</label>
-                        <input type="file" class="form-control-file" id="cropImage">
+                        <input type="file" class="form-control-file" id="image">
                     </div>
                 </form>
             </div>
@@ -144,6 +155,6 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-<script src="/controller/crop.js"></script>
+<script src="/js/crop.js"></script>
 </body>
 </html>

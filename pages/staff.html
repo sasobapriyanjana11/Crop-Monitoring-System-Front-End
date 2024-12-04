@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar -->
+        
         <div class="col-md-3 col-lg-2 bg-light sidebar">
             <div class="profile-section text-center mt-4">
                 <img src="/assets/Images/profileimg.jpg" alt="Profile Picture" class="rounded-circle" width="60">
@@ -44,44 +44,58 @@
             </ul>
         </div>
 
-        <!-- Main Content -->
+        
         <div class="col-md-9 col-lg-10 main-content">
             <h1 class="my-4 text-center">Staff Management</h1>
 
-            <!-- Search Bar and Add Button -->
+           
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <input type="text" class="form-control w-50" placeholder="Search Staff">
                 <button class="btn btn-success" data-toggle="modal" data-target="#addStaffModal">Add Staff</button>
             </div>
 
-            <!-- Staff Table -->
+            
+            <h5>Staff Information (Part 1)</h5>
             <table class="table table-bordered">
                 <thead class="thead-light">
-                <tr>
-                    <th>Select</th>
-                    <th>Staff ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Designation</th>
-                    <th>Gender</th>
-                    <th>Join Date</th>
-                    <th>DOB</th>
-                    <th>Contact No</th>
-                    <th>Email</th>
-                    <th>Equipment Code</th>
-                    <th>Vehicle Code</th>
-                    <th>Actions</th>
-                </tr>
+                    <tr>
+                        <th>Select</th>
+                        <th>Staff ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Designation</th>
+                        <th>Gender</th>
+                        <th>Join Date</th>
+                        <th>DOB</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <!-- Staff data rows will go here -->
+                   
+                </tbody>
+            </table>
+
+            
+            <h5>Staff Information (Part 2)</h5>
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Address</th>
+                        <th>Contact No</th>
+                        <th>Postal Code</th>
+                        <th>Email</th>
+                        <th>Equipment Code</th>
+                        <th>Vehicle Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- Add Staff Modal -->
+
 <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -133,32 +147,18 @@
                             <input type="date" class="form-control" id="dob">
                         </div>
                         <div class="form-group col-md-6">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Enter Address">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
                             <label for="contactNo">Contact No</label>
                             <input type="text" class="form-control" id="contactNo" placeholder="Enter Contact Number">
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="buildingNo">buildingNo</label>
-                            <input type="text" class="form-control" id="buildingNo" placeholder="Enter Build Number">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="city">City</label>
-                            <input type="text" class="form-control" id="city" placeholder="Enter City">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="lane">Lane</label>
-                            <input type="text" class="form-control" id="lane" placeholder="Enter Lane">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="postalCode">postal Code</label>
+                            <label for="postalCode">Postal Code</label>
                             <input type="text" class="form-control" id="postalCode" placeholder="Postal Code">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="state">State</label>
-                            <input type="text" class="form-control" id="state" placeholder="State">
                         </div>
                     </div>
                     <div class="form-row">
@@ -179,7 +179,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" onclick="saveStaff()">Save</button>
-                <button type="button" class="btn btn-info" onclick="updateStaff()">Update</button>
+                <button type="button" class="btn btn-info"  onclick="updateStaff()">Update</button>
                 <button type="button" class="btn btn-warning" onclick="getAllStaff()">Get All</button>
                 <button type="button" class="btn btn-danger" onclick="deleteStaff()">Delete</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

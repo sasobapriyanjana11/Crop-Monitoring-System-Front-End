@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment Management</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- <link rel="stylesheet" href="/css/equipment.css"> -->
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/equipment.css">
 </head>
 <body>
 
@@ -48,8 +47,6 @@
         <!-- Main Content -->
         <div class="col-md-9 col-lg-10 main-content">
             <h1 class="my-4 text-center">Equipment Management</h1>
-
-            <!-- Search Bar and Add Button -->
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="search-container">
                     <input type="text" id="searchInput" placeholder="Search by equipment name...">
@@ -88,24 +85,44 @@
             </div>
             <div class="modal-body">
                 <form id="equipmentForm">
-                    <div class="form-row">
+                    <div class="row mb-3">
                         <div class="form-group col-md-6">
                             <label for="equipmentCode">Equipment Code</label>
                             <input type="text" class="form-control" id="equipmentCode" placeholder="Enter Equipment Code">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="equipmentName">Equipment Name</label>
-                            <input type="text" class="form-control" id="equipmentName" placeholder="Enter Equipment Name">
+                         <label for="equipmentName" class="form-label">Equipment Name</label>
+                          <select class="form-select" id="equipmentName" required>
+                            <option value="" disabled selected>Select Equipment</option>
+                            <option value="plough">Plough</option>
+                            <option value="mamotee">Mamotee</option>
+                            <option value="shovel">Shovel</option>
+                            <option value="irrigation_pumps">Irrigation Pumps</option>
+                            <option value="wheelbarrow">Wheelbarrow</option>
+                            <option value="sprayer">Sprayer</option>
+                            <option value="axe_10">Axe</option>
+                            <option value="chainsaw">Chain Saw</option>
+                            <option value="combine_harvester">Combine Harvester</option>
+                            <option value="seeder">Seeder</option>
+                            <option value="weeder">Weeder</option>
+                            <option value="wheel_wrench">Wheel Wrench</option>
+                            <option value="screwdrivers">Screwdrivers</option>
+                            <option value="other">Other</option>
+                        </select>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="row mb-3">
                         <div class="form-group col-md-6">
                             <label for="status">Status</label>
                             <input type="text" class="form-control" id="status" placeholder="Enter Status">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="type">Type</label>
-                            <input type="text" class="form-control" id="type" placeholder="Enter Type">
+                            <label for="equipmentType" class="form-label">Type</label>
+                        <select class="form-select" id="equipmentType" required>
+                            <option value="" disabled selected>Select Type</option>
+                            <option value="ELECTRICAL">ELECTRICAL</option>
+                            <option value="MECHANICAL">MECHANICAL</option>
+                        </select>
                         </div>
                     </div>
                 </form>
@@ -123,7 +140,6 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-<!-- <script src="/controller/equipment.js"></script> -->
 <script src="/js/equipment.js"></script>
 </body>
 </html>

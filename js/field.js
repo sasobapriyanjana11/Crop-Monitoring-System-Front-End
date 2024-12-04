@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     getAllFields();
 });
@@ -9,16 +10,16 @@ function saveField() {
     if (fieldData && selectedRow === null) {
         const formData = new FormData();
 
-        // Append regular form data
+        
         formData.append('fieldCode', fieldData.fieldCode);
         formData.append('name', fieldData.name);
         formData.append('extentSize', fieldData.extentSize);
         formData.append('location', fieldData.location);
         formData.append('equipmentCode', fieldData.equipmentCode);
 
-        // Append image files if available
-        const img1 = $('#img1')[0].files[0];
-        const img2 = $('#img2')[0].files[0];
+        // Append image files 
+        const img1 = $('#image1')[0].files[0];
+        const img2 = $('#image2')[0].files[0];
 
         if (img1) formData.append('image1', img1);
         if (img2) formData.append('image2', img2);
@@ -27,8 +28,8 @@ function saveField() {
             url: "http://localhost:8080/cropMonitor/api/v1/fields",  
             method: "POST",
             data: formData,
-            processData: false,  // Prevent jQuery from processing the data
-            contentType: false,  // Let the browser set the content type for file uploads
+            processData: false,  
+            contentType: false,  
             success: function () {
                 alert("Field added successfully.");
                 resetForm();
@@ -47,28 +48,28 @@ function updateField() {
 
     if (fieldData && selectedRow !== null) {
         const formData = new FormData();
-        const fieldCode = $(selectedRow).find("td:eq(1)").text();  // Get field code for the update
+        const fieldCode = $(selectedRow).find("td:eq(1)").text();  
 
-        // Append regular form data
+        
         formData.append('fieldCode', fieldData.fieldCode);
-        formData.append('name', fieldData.name);
-        formData.append('extentSize', fieldData.extentSize);
-        formData.append('location', fieldData.location);
+        formData.append('fieldName', fieldData.fieldName); 
+        formData.append('fieldSize', fieldData.fieldSize); 
+        formData.append('fieldLocation', fieldData.fieldLocation);  
         formData.append('equipmentCode', fieldData.equipmentCode);
-
+        
         // Append image files if available
-        const img1 = $('#img1')[0].files[0];
-        const img2 = $('#img2')[0].files[0];
-
-        if (img1) formData.append('image1', img1);
-        if (img2) formData.append('image2', img2);
+        const img1 = $('#fieldImage1')[0].files[0];  
+        const img2 = $('#fieldImage2')[0].files[0]; 
+        
+        if (img1) formData.append('fieldImage1', img1); 
+        if (img2) formData.append('fieldImage2', img2); 
 
         $.ajax({
-            url: `http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}`,  
+            url: "http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}",  
             method: "PATCH",
             data: formData,
-            processData: false,  // Prevent jQuery from processing the data
-            contentType: false,  // Let the browser set the content type for file uploads
+            processData: false,  
+            contentType: false, 
             success: function () {
                 alert("Field updated successfully.");
                 resetForm();
@@ -93,21 +94,21 @@ function getAllFields() {
 
             response.forEach(field => {
                 const row = `
-                    <tr data-id="${field.fieldCode}">
-                        <td><input type="checkbox"></td>
-                        <td>${field.fieldCode}</td>
-                        <td>${field.name}</td>
-                        <td>${field.extentSize}</td>
-                        <td>${field.location}</td>
-                        <td>${field.image1 ? `<img src="${field.image1}" alt="Image 1" width="50" height="50">` : 'N/A'}</td>
-                        <td>${field.image2 ? `<img src="${field.image2}" alt="Image 2" width="50" height="50">` : 'N/A'}</td>
-                        <td>${field.equipmentCode}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editField(${field.fieldCode})">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteField(${field.fieldCode})">Delete</button>
-                        </td>
-                    </tr>
-                `;
+                <tr data-id="${field.fieldCode}">
+                    <td><input type="checkbox"></td>
+                    <td>${field.fieldCode}</td>
+                    <td>${field.fieldName}</td>  <!-- Use fieldName instead of name -->
+                    <td>${field.fieldSize}</td>  <!-- Use fieldSize instead of extentSize -->
+                    <td>${field.fieldLocation || 'N/A'}</td>  <!-- Use fieldLocation, show N/A if undefined -->
+                    <td>${field.image1 ? `<img src="${field.image1}" alt="Image 1" width="50" height="50">` : 'N/A'}</td>
+                    <td>${field.image2 ? `<img src="${field.image2}" alt="Image 2" width="50" height="50">` : 'N/A'}</td>
+                    <td>${field.equipmentCode}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editField('${field.fieldCode}')">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteField('${field.fieldCode}')">Delete</button>
+                    </td>
+                </tr>
+            `;
                 tbody.append(row);
             });
         },
@@ -118,10 +119,10 @@ function getAllFields() {
     });
 }
 
-// Edit Field (populate form with data for editing)
+// Edit Field 
 function editField(fieldCode) {
     $.ajax({
-        url: `http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}`,  
+        url: "http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}",  
         method: "GET",
         success: function (field) {
             $('#fieldCode').val(field.fieldCode);
@@ -130,11 +131,11 @@ function editField(fieldCode) {
             $('#fieldLocation').val(field.location);
             $('#equipmentCode').val(field.equipmentCode);
 
-            // Display image names or leave blank if no image
+            
             $('#img1').val('');
             $('#img2').val('');
 
-            // Show images if available
+            
             if (field.image1) {
                 $('#img1Preview').html(`<img src="${field.image1}" alt="Image 1" width="100" height="100">`);
             }
@@ -155,7 +156,7 @@ function editField(fieldCode) {
 function deleteField(fieldCode) {
     if (confirm("Are you sure you want to delete this field?")) {
         $.ajax({
-            url: `http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}`,  
+            url: "http://localhost:8080/cropMonitor/api/v1/fields/${fieldCode}",  
             method: "DELETE",
             success: function () {
                 alert("Field deleted successfully!");
@@ -171,13 +172,19 @@ function deleteField(fieldCode) {
 
 // Get data from the form
 function getFieldData() {
-    return {
-        fieldCode: $('#fieldCode').val(),
-        name: $('#fieldName').val(),
-        extentSize: $('#extentSize').val(),
-        location: $('#fieldLocation').val(),
-        equipmentCode: $('#equipmentCode').val()
-    };
+    var formData = new FormData();
+
+    // Append the form fields to the formData object
+    formData.append('fieldCode', $('#fieldCode').val());
+    formData.append('fieldName', $('#fieldName').val());
+    formData.append('fieldSize', parseFloat($('#fieldSize').val())); 
+    formData.append('latitude', parseFloat($('#latitude').val())); 
+    formData.append('longitude', parseFloat($('#longitude').val())); 
+    formData.append('fieldImage1', $('#image1')[0].files[0]); 
+    formData.append('fieldImage2', $('#image2')[0].files[0]); 
+    formData.append('equipmentCode', $('#equipmentCode').val());
+
+    return formData;
 }
 
 // Reset form
@@ -192,3 +199,4 @@ function resetForm() {
 $(document).ready(function () {
     getAllFields();
 });
+

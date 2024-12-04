@@ -1,12 +1,10 @@
 let selectedRow = null;
 
-// Save JWT token to localStorage after successful login
 function storeJwtToken(token) {
     localStorage.setItem('jwtToken', token);
     console.log("JWT token saved:", token);
 }
 
-// Retrieve JWT token from localStorage
 function getJwtToken() {
     const token = localStorage.getItem('jwtToken');
     console.log("JWT token retrieved:", token);
@@ -126,35 +124,27 @@ function editVehicle(button) {
     $('#fuelType').val($(selectedRow).find("td:eq(4)").text());
     $('#status').val($(selectedRow).find("td:eq(5)").text());
     $('#remarks').val($(selectedRow).find("td:eq(6)").text());
-    $('#addVehicleModal').modal('show');
 }
 
-// Remove Vehicle (Client-side Only)
-function removeVehicle(button) {
-    $(button).closest('tr').remove();
-}
-
-// Add Table Row
+// Add Row to Vehicle Table
 function addTableRow(vehicle) {
-    const newRow = `
-        <tr>
-            <td><input type="checkbox"></td>
-            <td>${vehicle.vehicleCode}</td>
-            <td>${vehicle.licensePlate}</td>
-            <td>${vehicle.category}</td>
-            <td>${vehicle.fuelType}</td>
-            <td>${vehicle.status}</td>
-            <td>${vehicle.remarks}</td>
-            <td>
-                <button class="btn btn-warning btn-sm" onclick="editVehicle(this)">Edit</button>
-                <button class="btn btn-danger btn-sm" onclick="removeVehicle(this)">Delete</button>
-            </td>
-        </tr>
-    `;
-    $('table tbody').append(newRow);
+    const row = `<tr>
+        <td><input type="checkbox" onclick="selectRow(this)"></td>
+        <td>${vehicle.vehicleCode}</td>
+        <td>${vehicle.licensePlate}</td>
+        <td>${vehicle.category}</td>
+        <td>${vehicle.fuelType}</td>
+        <td>${vehicle.status}</td>
+        <td>${vehicle.remarks}</td>
+        <td>
+            <button class="btn btn-info" onclick="editVehicle(this)">Edit</button>
+            <button class="btn btn-danger" onclick="deleteVehicle()">Delete</button>
+        </td>
+    </tr>`;
+    $('table tbody').append(row);
 }
 
-// Update Table Row
+// Update Row in Vehicle Table
 function updateTableRow(row, vehicle) {
     $(row).find("td:eq(1)").text(vehicle.vehicleCode);
     $(row).find("td:eq(2)").text(vehicle.licensePlate);
@@ -168,21 +158,44 @@ function updateTableRow(row, vehicle) {
 function getFormData() {
     const vehicleCode = $('#vehicleCode').val().trim();
     const licensePlate = $('#licensePlate').val().trim();
-    const category = $('#category').val().trim();
-    const fuelType = $('#fuelType').val().trim();
-    const status = $('#status').val().trim();
+    const category = $('#category').val();
+    const fuelType = $('#fuelType').val();
+    const status = $('#status').val();
     const remarks = $('#remarks').val().trim();
 
     if (vehicleCode && licensePlate && category && fuelType && status && remarks) {
-        return { vehicleCode, licensePlate, category, fuelType, status, remarks };
-    } else {
-        alert("All fields are required.");
-        return null;
+        return {
+            vehicleCode,
+            licensePlate,
+            category,
+            fuelType,
+            status,
+            remarks
+        };
     }
+    return null;
 }
 
 // Reset Form
 function resetForm() {
-    $('#vehicleForm')[0].reset();
+    $('#vehicleCode').val('');
+    $('#licensePlate').val('');
+    $('#category').val('');
+    $('#fuelType').val('');
+    $('#status').val('');
+    $('#remarks').val('');
     selectedRow = null;
 }
+
+// Select Row in Table
+function selectRow(checkbox) {
+    if (checkbox.checked) {
+        selectedRow = $(checkbox).closest('tr');
+    } else {
+        selectedRow = null;
+    }
+}
+// Initialize the vehicle table on page load
+$(document).ready(function () {
+    getAllVehicles(); 
+});

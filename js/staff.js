@@ -4,7 +4,6 @@ let selectedRow = null;
 function saveStaff() {
     const staffData = getStaffData();
     if (staffData && selectedRow === null) {
-        // POST request to create a new staff member
         $.ajax({
             url: `http://localhost:8080/cropMonitor/api/v1/staff`,
             method: "POST",
@@ -13,7 +12,7 @@ function saveStaff() {
             success: function () {
                 alert("Staff added successfully.");
                 resetForm();
-                getAllStaff(); // Refresh the staff list
+                getAllStaff(); 
             },
             error: function () {
                 alert("Error adding staff.");
@@ -33,13 +32,11 @@ function editStaff(td) {
     $('#joinDate').val($(selectedRow).find("td:eq(6)").text());
     $('#dob').val($(selectedRow).find("td:eq(7)").text());
     $('#contactNo').val($(selectedRow).find("td:eq(8)").text());
-    $('#email').val($(selectedRow).find("td:eq(9)").text());
-    $('#equipmentCode').val($(selectedRow).find("td:eq(10)").text());
-    $('#vehicleCode').val($(selectedRow).find("td:eq(11)").text());
-    $('#buildingNo').val($(selectedRow).find("td:eq(12)").text());
-    $('#city').val($(selectedRow).find("td:eq(13)").text());
-    $('#lane').val($(selectedRow).find("td:eq(14)").text());
-    $('#postalCode').val($(selectedRow).find("td:eq(15)").text());
+    $('#address').val($(selectedRow).find("td:eq(9)").text());
+    $('#postalCode').val($(selectedRow).find("td:eq(10)").text());
+    $('#email').val($(selectedRow).find("td:eq(11)").text());
+    $('#equipmentCode').val($(selectedRow).find("td:eq(12)").text());
+    $('#vehicleCode').val($(selectedRow).find("td:eq(13)").text());
     $('#addStaffModal').modal('show');
 }
 
@@ -47,8 +44,8 @@ function editStaff(td) {
 function updateStaff() {
     const staffData = getStaffData();
     if (staffData && selectedRow !== null) {
-        const staffId = $(selectedRow).find("td:eq(1)").text(); // Staff ID from the selected row
-        // PUT request to update the staff member
+        const staffId = $(selectedRow).find("td:eq(1)").text(); 
+        
         $.ajax({
             url: `http://localhost:8080/cropMonitor/api/v1/staff/${staffId}`,
             method: "PATCH",
@@ -57,7 +54,7 @@ function updateStaff() {
             success: function () {
                 alert("Staff updated successfully.");
                 resetForm();
-                getAllStaff(); // Refresh the staff list
+                getAllStaff();
                 $('#addStaffModal').modal('hide');
             },
             error: function () {
@@ -67,16 +64,65 @@ function updateStaff() {
     }
 }
 
+
+$(document).on("click", "tr", function () {
+    
+    if (selectedRow && selectedRow.is(this)) {
+        $(this).removeClass("selected");
+        selectedRow = null;
+        resetForm();
+    } else {
+        
+        if (selectedRow) {
+            selectedRow.removeClass("selected");
+        }
+        $(this).addClass("selected");
+        selectedRow = $(this);
+
+        
+        const staffId = selectedRow.find("td:nth-child(2)").text();
+        const firstName = selectedRow.find("td:nth-child(3)").text();
+        const lastName = selectedRow.find("td:nth-child(4)").text();
+        const designation = selectedRow.find("td:nth-child(5)").text();
+        const gender = selectedRow.find("td:nth-child(6)").text();
+        const joinDate = selectedRow.find("td:nth-child(7)").text();
+        const dob = selectedRow.find("td:nth-child(8)").text();
+        const address = selectedRow.find("td:nth-child(9)").text();
+        const contactNo = selectedRow.find("td:nth-child(10)").text();
+        const postalCode = selectedRow.find("td:nth-child(11)").text();
+        const email = selectedRow.find("td:nth-child(12)").text();
+        const equipmentCode = selectedRow.find("td:nth-child(13)").text();
+        const vehicleCode = selectedRow.find("td:nth-child(14)").text();
+
+        $('#staffId').val(staffId);
+        $('#firstName').val(firstName);
+        $('#lastName').val(lastName);
+        $('#designation').val(designation);
+        $('#gender').val(gender);
+        $('#joinDate').val(joinDate);
+        $('#dob').val(dob);
+        $('#address').val(address);
+        $('#contactNo').val(contactNo);
+        $('#postalCode').val(postalCode);
+        $('#email').val(email);
+        $('#equipmentCode').val(equipmentCode);
+        $('#vehicleCode').val(vehicleCode);
+    }
+});
+
 // Get All Staff function
 function getAllStaff() {
     $.ajax({
         url:`http://localhost:8080/cropMonitor/api/v1/staff/all_staff`,
         method: "GET",
         success: function (data) {
-            const staffTableBody = $('table tbody');
-            staffTableBody.empty(); // Clear the table
+            const staffTableBody1 = $('table tbody').first(); // Part 1 table
+            const staffTableBody2 = $('table tbody').last();  // Part 2 table
+            staffTableBody1.empty(); 
+            staffTableBody2.empty(); 
             data.forEach(staff => {
-                const newRow = `
+                // Part 1 Row
+                const newRow1 = `
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>${staff.staffId}</td>
@@ -86,21 +132,22 @@ function getAllStaff() {
                         <td>${staff.gender}</td>
                         <td>${staff.joinDate}</td>
                         <td>${staff.dob}</td>
+                    </tr>
+                `;
+                staffTableBody1.append(newRow1);
+
+                // Part 2 Row
+                const newRow2 = `
+                    <tr>
+                        <td>${staff.address}</td>
                         <td>${staff.contactNo}</td>
+                        <td>${staff.postalCode}</td>
                         <td>${staff.email}</td>
                         <td>${staff.equipmentCode}</td>
                         <td>${staff.vehicleCode}</td>
-                        <td>${staff.buildingNo}</td>
-                        <td>${staff.city}</td>
-                        <td>${staff.lane}</td>
-                        <td>${staff.postalCode}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editStaff(this)">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="removeStaff(this, '${staff.staffId}')">Delete</button>
-                        </td>
                     </tr>
                 `;
-                staffTableBody.append(newRow);
+                staffTableBody2.append(newRow2);
             });
         },
         error: function () {
@@ -110,21 +157,26 @@ function getAllStaff() {
 }
 
 // Delete Staff function
-function removeStaff(td, staffId) {
-    if (confirm("Are you sure you want to delete this staff member?")) {
-        // DELETE request to delete the staff member
+function deleteStaff(staffId) {
+    
+    if (selectedRow !== null) {
+        const staffId = $(selectedRow).find("td:eq(1)").text();
         $.ajax({
             url: `http://localhost:8080/cropMonitor/api/v1/staff/${staffId}`,
-            method: "DELETE",
+            type: 'DELETE',
             success: function () {
-                alert("Staff deleted successfully.");
-                getAllStaff(); // Refresh the staff list
+                alert("staff deleted successfully!");
+                $(selectedRow).remove();
+                getAllStaff();
             },
-            error: function () {
-                alert("Error deleting staff.");
+            error: function (error) {
+                alert("Error deleting staff: " + error.responseText);
             }
         });
+    } else {
+        alert("Select a staff to delete.");
     }
+
 }
 
 // Get Staff Data from the form
@@ -137,14 +189,12 @@ function getStaffData() {
         gender: $('#gender').val(),
         joinDate: $('#joinDate').val(),
         dob: $('#dob').val(),
+        address: $('#address').val(),
         contactNo: $('#contactNo').val(),
+        postalCode: $('#postalCode').val(),
         email: $('#email').val(),
         equipmentCode: $('#equipmentCode').val(),
-        vehicleCode: $('#vehicleCode').val(),
-        buildingNo: $('#buildingNo').val(),
-        city: $('#city').val(),
-        lane: $('#lane').val(),
-        postalCode: $('#postalCode').val() // Include postal code in staff data
+        vehicleCode: $('#vehicleCode').val()
     };
 }
 
@@ -158,3 +208,7 @@ function resetForm() {
 $(document).ready(function () {
     getAllStaff();
 });
+
+
+
+

@@ -1,0 +1,71 @@
+
+.form-group select {
+padding: 12px;
+font-size: 1rem;
+border-radius: 8px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+border: 1px solid #ccc;
+width: 100%;
+}
+
+/* Style for form inputs */
+.form-group input {
+padding: 12px;
+font-size: 1rem;
+border-radius: 8px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+border: 1px solid #ccc;
+width: 100%;
+}
+
+/* Row and column spacing */
+.form-row {
+margin-bottom: 20px;
+}
+
+/* Modal body padding */
+.modal-body {
+padding: 30px;
+}
+
+/* Modal footer padding */
+.modal-footer {
+padding: 20px;
+}
+
+/* Add padding to individual form groups */
+.form-row .form-group {
+padding: 12px;
+}
+
+/* Modal content styling */
+.modal-content {
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Button spacing */
+.btn-primary, .btn-info, .btn-warning, .btn-danger {
+margin-right: 10px;
+}
+
+/* General form control and select styles */
+.form-control, .form-select {
+border-radius: 8px;
+padding: 12px;
+font-size: 1rem;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+width: 100%;
+border: 1px solid #ccc;
+}
+
+/* Styling for modal footer buttons */
+.modal-footer .btn {
+min-width: 100px;
+padding: 10px 15px;
+}
+
+/* Additional styling for button hover effects */
+.btn:hover {
+opacity: 0.8;
+}

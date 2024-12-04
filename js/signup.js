@@ -1,24 +1,23 @@
 $(document).ready(function() {
-    // Attach the form submission handler
+
     $('#signupForm').on('submit', function(event) {
         event.preventDefault();
         userRegistration();
     });
 });
 
-// Function to handle user registration
+
 function userRegistration() {
     const email = $('#email').val().trim();
     const password = $('#password').val().trim();
-    const role = $('#role').val().trim(); // Get role value
+    const role = $('#role').val().trim(); 
 
-    // Validate inputs
+    
     if (!email || !password || !role) {
         alert('Please fill in all fields.');
         return;
     }
 
-    // AJAX request to register the user
     $.ajax({
         url: "http://localhost:8080/cropMonitor/api/v1/auth/signup",
         method: "POST",
@@ -31,9 +30,6 @@ function userRegistration() {
         success: function(response) {
             alert('Signup successful!');
             console.log(response);
-
-            // Save JWT token in localStorage
-            // localStorage.setItem("token", response.token);
             localStorage.setItem('jwtToken', response.token);
 
             $("#message").text("Registration successful!")

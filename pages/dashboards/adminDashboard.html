@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/css/adminDashboard.css">
     <style>
-        /* Sidebar styles for responsiveness */
+        
 .sidebar {
     background-color: #d1fcd7;
     color: #090909;
@@ -137,15 +137,12 @@
         </div>
     </div>
 
-    <!-- JS Script -->
+    
     <script src="/controller/adminDashboard.js"></script>
-    <script>
-        // JavaScript for Hamburger Button
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const sidebar = document.getElementById("sidebar");
-
-// Toggle sidebar visibility on button click
-hamburgerBtn.addEventListener("click", () => {
+    <script>    
+     const hamburgerBtn = document.getElementById("hamburgerBtn");
+     const sidebar = document.getElementById("sidebar");
+    hamburgerBtn.addEventListener("click", () => {
     sidebar.classList.toggle("active");
 });
 
