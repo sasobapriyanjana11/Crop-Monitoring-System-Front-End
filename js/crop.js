@@ -18,6 +18,7 @@ async function saveCrop() {
 
             if (response.ok) {
                 alert("Crop details added successfully");
+                getAllCrops();
                 const newCrop = await response.json();
                 addRowToTable(newCrop);
                 resetForm();
