@@ -55,7 +55,7 @@ body {
 }
 
 .sidebar .nav-link:hover {
-    background-color: #a9e8ac;
+    background-color: #0d6e39;
     color: white;
 }
 
@@ -78,8 +78,8 @@ body {
     margin-left: 40px;
 }
 
-.card:nth-child(1) { background-color: #69ce74; }
-.card:nth-child(2) { background-color: #28a745; }
+.card:nth-child(1) { background-color: #88b60b; }
+.card:nth-child(2) { background-color: #54c512; }
 .card:nth-child(3) { background-color: #027111; }
 
 /* Chart Styling */

@@ -3,9 +3,9 @@ const cropCtx = document.getElementById('cropChart').getContext('2d');
 new Chart(cropCtx, {
     type: 'pie',
     data: {
-        labels: ['Vegetables', 'Fruits', 'Grains'], // Crop categories
+        labels: ['Vegetables', 'Fruits', 'Grains'],
         datasets: [{
-            data: [50, 30, 20], // Example data
+            data: [50, 30, 20], 
             backgroundColor: ['#4caf50', '#ff9800', '#2196f3']
         }]
     },
@@ -27,10 +27,10 @@ const fieldCtx = document.getElementById('fieldChart').getContext('2d');
 new Chart(fieldCtx, {
     type: 'bar',
     data: {
-        labels: ['Field Alpha', 'Field Beta', 'Field Gamma'], // Field names
+        labels: ['Field Alpha', 'Field Beta', 'Field Gamma'],
         datasets: [{
             label: 'Field Size (Hectares)',
-            data: [50, 30, 40], // Field sizes
+            data: [50, 30, 40], 
             backgroundColor: ['#4caf50', '#ff9800', '#2196f3']
         }]
     },
