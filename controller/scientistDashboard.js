@@ -24,7 +24,7 @@
         new Chart(cropLineCtx, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','July','Agust'], // Example months
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','July','Agust'], 
                 datasets: [{
                     label: 'Growth (in %)',
                     data: [10, 20, 40, 60, 80, 100,120,50],
