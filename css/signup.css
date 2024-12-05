@@ -16,6 +16,7 @@ body {
 .left-section {
     flex: 1;
     background-color: #d9fcdf;
+    /* background-color: #99f1c1; */
     color: white;
     display: flex;
     flex-direction: column;
