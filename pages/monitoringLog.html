@@ -19,7 +19,7 @@
             </div>
             <ul class="nav flex-column mt-4">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
+                    <a class="nav-link" href="/pages/dashboards/managerDashboard.html">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/pages/field.html">Field</a>
@@ -37,7 +37,7 @@
                     <a class="nav-link" href="/pages/monitoringLog.html">Monitoring Logs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="/pages/index.html">Logout</a>
                 </li>
             </ul>
         </div>
@@ -54,8 +54,8 @@
 
             <!-- Log Table -->
             <table class="table table-bordered">
-                <thead class="thead-light">
-                <tr>
+                <thead id="thead">               
+                <tr class="thead">
                     <th>Select</th>
                     <th>Log Code</th>
                     <th>Log Date</th>
@@ -65,7 +65,7 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="tBody">
                 <!-- Monitoring Log rows will be dynamically added here -->
                 </tbody>
             </table>
