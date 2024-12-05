@@ -170,6 +170,10 @@ function getAllEquipment() {
                         <td>${equipment.equipmentName}</td>
                         <td>${equipment.status}</td>
                         <td>${equipment.type}</td>
+                        <td>
+                          <button class="btn btn-warning btn-sm" onclick="editEquipment(this)">Edit</button>
+                          <button class="btn btn-danger btn-sm" onclick="removeEquipment(this)">Delete</button>
+                        </td>
                     </tr>`;
                 });
                 $('.tBody').html(tableBody);
@@ -180,7 +184,28 @@ function getAllEquipment() {
         });
     }
 }
+// Edit Crop function
+function editEquipment(button) {
+    selectedRow = $(button).closest("tr");
+    const equipmentData = {
+        equipmentCode: $(selectedRow).find("td:eq(1)").text(),
+        equipmentName: $(selectedRow).find("td:eq(2)").text(),
+        status: $(selectedRow).find("td:eq(3)").text(),
+        type: $(selectedRow).find("td:eq(4)").text(),
+       
+    };
+    
+    $("#equipmentCode").val(equipmentData.equipmentCode);
+    $("#equipmentName").val(equipmentData.equipmentName);
+    $("#status").val(equipmentData.status);
+    $("#type").val(equipmentData.type);
+}
 
+// Remove Crop function
+function removeEquipment(button) {
+    const row = $(button).closest("tr");
+    row.remove();
+}
 // Search equipment by name
 function search() {
     const query = $('#searchInput').val().toLowerCase();
