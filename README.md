@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=1100&height=70&duration=4000&lines=Crop+Monitoring+System+Frontend+-+Green+Shadow+(Pvt)+Ltd&color=bcfab5" />
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=1100&height=70&duration=4000&lines=Crop+Monitoring+System+Frontend+-+Green+Shadow+(Pvt)+Ltd&color=12b94f" />
 </h1>
 
 # Description
@@ -45,6 +45,9 @@ The front end of the Crop Monitoring Management System is designed to provide an
 
 - *Dashboard*:
   - Provides an overview of system statistics and recent activity logs.
+
+-Clone the repository:
+git clone https://github.com/sasobapriyanjana11/Crop-Monitoring-System-Front-End.git
 
  ## License
 🦇© 2024 All Right Reserved Created By sasobapriyanjana11 
