@@ -6,7 +6,7 @@ const staffCounts = [5, 10, 20, 8]; // Replace with dynamic data
 const totalStaffCount = staffCounts.reduce((a, b) => a + b, 0);
 document.getElementById("staffCount").textContent = totalStaffCount;
 
-// Pie chart for staff designation breakdown
+// Pie chart for staff designation 
 const designationCtx = document.getElementById('designationChart').getContext('2d');
 const designationChart = new Chart(designationCtx, {
 type: 'pie',
