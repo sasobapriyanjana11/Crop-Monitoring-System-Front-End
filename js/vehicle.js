@@ -137,8 +137,8 @@ function addTableRow(vehicle) {
         <td>${vehicle.status}</td>
         <td>${vehicle.remarks}</td>
         <td>
-            <button class="btn btn-info" onclick="editVehicle(this)">Edit</button>
-            <button class="btn btn-danger" onclick="deleteVehicle()">Delete</button>
+             <button class="btn btn-warning btn-sm" onclick="editVehicle(this)">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="removeVehicle(this)">Delete</button>
         </td>
     </tr>`;
     $('table tbody').append(row);
