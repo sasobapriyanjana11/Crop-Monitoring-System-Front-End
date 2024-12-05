@@ -48,15 +48,17 @@ body {
 .sidebar .nav-link {
     display: block;
     padding: 8px;
+    margin-top: 30px;
     font-weight: 700;
     color: #0c0c0c;
     text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+    text-align: center;
 }
 
 .sidebar .nav-link:hover {
-    background-color: #a9e8ac;
+    background-color: #0d6e39;
     color: white;
 }
 
@@ -65,7 +67,7 @@ body {
 }
 /* Main container styling */
 .main-container {
-    margin-left: 250px; /* Sidebar width */
+    margin-left: 250px; 
     padding: 20px;
 }
 
