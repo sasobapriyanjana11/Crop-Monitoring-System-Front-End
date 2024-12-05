@@ -1,0 +1,19 @@
+/* Custom style for the Search input field */
+input[type="text"].form-control {
+    background-color: #f8f9fa; /* Light background */
+    border: 2px solid #6c757d; /* Gray border */
+    color: #495057; /* Text color */
+}
+
+/* Custom style for the Add Crop button */
+button.btn-success {
+    background-color: #007bff; /* Change to blue */
+    border-color: #0056b3; /* Darker blue border */
+    color: #fff; /* White text */
+}
+
+/* Add hover effect for the button */
+button.btn-success:hover {
+    background-color: #0056b3; /* Darker blue */
+    border-color: #003f7f; /* Even darker border */
+}
